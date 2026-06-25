@@ -41,3 +41,29 @@ jobs:
           failedThreshold: 90
           resultPath: coverage/.last_run.json
 ```
+
+## Dev
+
+Local development commands:
+
+```bash
+npm install
+```
+
+```bash
+npm run lint
+```
+
+```bash
+npm run test
+```
+
+```bash
+npm run pack
+```
+
+Run everything used in CI build job:
+
+```bash
+npm run all
+```

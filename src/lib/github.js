@@ -1,6 +1,7 @@
 const {readFile} = require('node:fs/promises')
 
 const API_BASE = 'https://api.github.com'
+const COMMENT_HEADER = '## Simplecov Report'
 
 function getInput(name, {required = false, defaultValue = ''} = {}) {
   const key = `INPUT_${name.replace(/ /g, '_').toUpperCase()}`

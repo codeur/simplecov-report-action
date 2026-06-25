@@ -10,9 +10,12 @@ jobs:
     name: eslint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
       - name: Install JS dependencies
-        run: yarn install
+        run: npm install
       - name: Run ESLint
         uses: reviewdog/action-eslint@v1
         with:
@@ -23,7 +26,7 @@ jobs:
     name: check / misspell
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: misspell
         uses: reviewdog/action-misspell@v1
         with:
@@ -41,7 +44,7 @@ jobs:
     name: runner / shellcheck
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: shellcheck
         uses: reviewdog/action-shellcheck@v1
         with:
@@ -56,7 +59,7 @@ jobs:
     name: check / yamllint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: yamllint
         uses: reviewdog/action-yamllint@v1
         with:
@@ -69,7 +72,7 @@ jobs:
     name: runner / actionlint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: reviewdog/action-actionlint@v1
         with:
           reporter: github-pr-annotations
@@ -80,7 +83,7 @@ jobs:
     name: runner / alex
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: reviewdog/action-alex@v1
         with:
           reporter: github-pr-annotations

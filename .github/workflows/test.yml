@@ -1,4 +1,4 @@
-name: "build-test"
+name: "Build test"
 on:
   pull_request:
   push:
@@ -7,14 +7,15 @@ jobs:
   build: # make sure build/ci work properly
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
       - run: |
           npm install
           npm run all
+
   test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
       - uses: ./
         with:
           resultPath: dummy_coverage/.last_run.json

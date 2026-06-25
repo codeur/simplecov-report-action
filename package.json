@@ -6,9 +6,10 @@
   "main": "src/main.js",
   "scripts": {
     "prepare": "husky",
+    "lint": "eslint .",
     "pack": "ncc build src/main.js -o dist --license licenses.txt",
     "test": "node --test test/*.test.js",
-    "all": "npm run test && npm run pack"
+    "all": "npm run lint && npm run test && npm run pack"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,10 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
+    "@eslint/js": "^10.0.0",
     "@vercel/ncc": "^0.38.3",
+    "eslint": "^10.0.0",
+    "globals": "^16.3.0",
     "husky": "^9.1.7"
   }
 }
