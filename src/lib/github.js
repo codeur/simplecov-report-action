@@ -65,7 +65,7 @@ async function githubRequest(token, endpoint, {method = 'GET', body} = {}) {
   return response.json()
 }
 
-async function upsertPullRequestComment(body, marker) {
+async function upsertPullRequestComment(commentBody, marker) {
   const token = getInput('token', {required: true})
   const issueNumber = await getIssueNumberFromEvent()
 
@@ -88,14 +88,14 @@ async function upsertPullRequestComment(body, marker) {
   if (existing) {
     await githubRequest(token, `/repos/${owner}/${repo}/issues/comments/${existing.id}`, {
       method: 'PATCH',
-      body
+      body: {body: commentBody}
     })
     return
   }
 
   await githubRequest(token, `/repos/${owner}/${repo}/issues/${issueNumber}/comments`, {
     method: 'POST',
-    body
+    body: {body: commentBody}
   })
 }
 

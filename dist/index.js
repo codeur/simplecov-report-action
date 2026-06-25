@@ -71,7 +71,7 @@ async function githubRequest(token, endpoint, {method = 'GET', body} = {}) {
   return response.json()
 }
 
-async function upsertPullRequestComment(body, marker) {
+async function upsertPullRequestComment(commentBody, marker) {
   const token = getInput('token', {required: true})
   const issueNumber = await getIssueNumberFromEvent()
 
@@ -94,14 +94,14 @@ async function upsertPullRequestComment(body, marker) {
   if (existing) {
     await githubRequest(token, `/repos/${owner}/${repo}/issues/comments/${existing.id}`, {
       method: 'PATCH',
-      body
+      body: {body: commentBody}
     })
     return
   }
 
   await githubRequest(token, `/repos/${owner}/${repo}/issues/${issueNumber}/comments`, {
     method: 'POST',
-    body
+    body: {body: commentBody}
   })
 }
 
@@ -195,7 +195,7 @@ module.exports = require("node:path");
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __nccwpck_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -209,7 +209,7 @@ module.exports = require("node:path");
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		var threw = true;
 /******/ 		try {
@@ -218,23 +218,23 @@ module.exports = require("node:path");
 /******/ 		} finally {
 /******/ 			if(threw) delete __webpack_module_cache__[moduleId];
 /******/ 		}
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat */
-/******/ 	
+/******/
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
-/******/ 	
+/******/
 /************************************************************************/
-/******/ 	
+/******/
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
 /******/ 	var __webpack_exports__ = __nccwpck_require__(936);
 /******/ 	module.exports = __webpack_exports__;
-/******/ 	
+/******/
 /******/ })()
 ;
