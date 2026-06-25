@@ -35,7 +35,7 @@ jobs:
         run: bundle exec rspec
 
       - name: Report SimpleCov
-        uses: <owner>/simplecov-report-action@v2
+        uses: codeur/simplecov-report-action@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           failedThreshold: 90
