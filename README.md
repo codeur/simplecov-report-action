@@ -1,34 +1,69 @@
-# Simplecov Report
+# Simplecov Report Action
 
-A GitHub Action that report simplecov coverage.
+GitHub Action to post SimpleCov coverage on pull requests and fail when coverage is below a threshold.
 
-![Demo](https://i.gyazo.com/c4e572c91fe8048c95392ea3ddce79f5.png)
+## What it does
 
-## Usage:
+- Reads coverage from `coverage/.last_run.json` by default.
+- Supports both `result.covered_percent` and `result.line`.
+- Creates or updates one PR comment titled `Simplecov Report`.
+- Fails the workflow if coverage is below `failedThreshold`.
 
-The action works only with `pull_request` event.
+## Inputs
 
-### Inputs
+- `token`: GitHub token (usually `${{ secrets.GITHUB_TOKEN }}`).
+- `failedThreshold`: Minimum accepted coverage, default `90`.
+- `resultPath`: Coverage file path, default `coverage/.last_run.json`.
 
-- `token` - The GITHUB_TOKEN secret.
-- `failedThreshold` - Failed threshold. (default: `90`)
-- `resultPath` - Path to last_run json file. (default: `coverage/.last_run.json`)
+## Usage
 
-## Example
+This action is intended for `pull_request` workflows.
 
 ```yaml
-name: Tests
+name: test
+
 on:
   pull_request:
 
 jobs:
-  build:
+  rspec:
+    runs-on: ubuntu-latest
     steps:
-      - name: Test
+      - uses: actions/checkout@v4
+
+      - name: Run tests
         run: bundle exec rspec
 
-      - name: Simplecov Report
-        uses: aki77/simplecov-report-action@v1
+      - name: Report SimpleCov
+        uses: codeur/simplecov-report-action@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          failedThreshold: 90
+          resultPath: coverage/.last_run.json
+```
+
+## Dev
+
+Local development commands:
+
+```bash
+npm install
+```
+
+```bash
+npm run lint
+```
+
+```bash
+npm run test
+```
+
+```bash
+npm run pack
+```
+
+Run everything used in CI build job:
+
+```bash
+npm run all
 ```
