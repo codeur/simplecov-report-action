@@ -1,6 +1,6 @@
 name: "Simplecov Report"
 description: "Simplecov Report"
-author: aki77
+author: codeur
 branding:
   icon: check-square
   color: green
@@ -17,5 +17,5 @@ inputs:
     description: "Github token"
     required: true
 runs:
-  using: "node12"
-  main: "dist/index.js"
+  using: 'node24'
+  main: 'dist/index.js'
