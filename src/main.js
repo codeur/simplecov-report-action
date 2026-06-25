@@ -39,7 +39,7 @@ async function run() {
     const parsed = JSON.parse(raw)
     const coveredPercent = parseCoveredPercent(parsed)
 
-    await upsertPullRequestComment(buildCommentBody(coveredPercent, failedThreshold))
+    await upsertPullRequestComment(buildCommentBody(coveredPercent, failedThreshold), COMMENT_HEADER)
 
     if (coveredPercent < failedThreshold) {
       throw new Error(`Coverage is less than ${failedThreshold}%. (${coveredPercent}%)`)

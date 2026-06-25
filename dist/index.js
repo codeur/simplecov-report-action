@@ -71,7 +71,7 @@ async function githubRequest(token, endpoint, {method = 'GET', body} = {}) {
   return response.json()
 }
 
-async function upsertPullRequestComment(body) {
+async function upsertPullRequestComment(body, marker) {
   const token = getInput('token', {required: true})
   const issueNumber = await getIssueNumberFromEvent()
 
@@ -88,7 +88,7 @@ async function upsertPullRequestComment(body) {
   )
 
   const existing = comments.find(comment =>
-    typeof comment.body === 'string' && comment.body.startsWith(COMMENT_HEADER)
+    typeof comment.body === 'string' && comment.body.startsWith(marker)
   )
 
   if (existing) {
@@ -154,7 +154,7 @@ async function run() {
     const parsed = JSON.parse(raw)
     const coveredPercent = parseCoveredPercent(parsed)
 
-    await upsertPullRequestComment(buildCommentBody(coveredPercent, failedThreshold))
+    await upsertPullRequestComment(buildCommentBody(coveredPercent, failedThreshold), COMMENT_HEADER)
 
     if (coveredPercent < failedThreshold) {
       throw new Error(`Coverage is less than ${failedThreshold}%. (${coveredPercent}%)`)

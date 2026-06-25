@@ -1,7 +1,6 @@
 const {readFile} = require('node:fs/promises')
 
 const API_BASE = 'https://api.github.com'
-const COMMENT_HEADER = '## Simplecov Report'
 
 function getInput(name, {required = false, defaultValue = ''} = {}) {
   const key = `INPUT_${name.replace(/ /g, '_').toUpperCase()}`
@@ -66,7 +65,7 @@ async function githubRequest(token, endpoint, {method = 'GET', body} = {}) {
   return response.json()
 }
 
-async function upsertPullRequestComment(body) {
+async function upsertPullRequestComment(body, marker) {
   const token = getInput('token', {required: true})
   const issueNumber = await getIssueNumberFromEvent()
 
@@ -83,7 +82,7 @@ async function upsertPullRequestComment(body) {
   )
 
   const existing = comments.find(comment =>
-    typeof comment.body === 'string' && comment.body.startsWith(COMMENT_HEADER)
+    typeof comment.body === 'string' && comment.body.startsWith(marker)
   )
 
   if (existing) {
